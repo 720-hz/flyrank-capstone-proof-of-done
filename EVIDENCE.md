@@ -78,17 +78,63 @@ audit_report.pdf: PDF document, version 1.3, 1 page(s)
 
 ## The real Claude API judge
 
-**Status: pending a real-world run on a machine with normal internet access and a real
-`ANTHROPIC_API_KEY`.** This sandbox's egress policy allows `api.anthropic.com` through (see
-`DESIGN.md`'s "Known sandbox constraint" section — confirmed directly by testing 12 candidate
-providers) but no API key is available here to spend. `AnthropicJudge`'s request-building and
-response-parsing are already proven end to end in `tests/test_judges.py` against a fake
-`httpx` transport — the forced `submit_verdict` tool call is built correctly, a real
-`tool_use` response is parsed correctly, and non-200/connection-error/missing-tool-call cases
-all degrade to `insufficient_evidence` instead of crashing. What's not yet proven here is the
-literal "a real Claude model looked at a real claim and returned a real verdict" step — same
-handoff pattern as the Discord bot in the social-studio capstone: run on a machine with its
-own key, not spent here.
+Run on a real machine with normal internet access, a real `ANTHROPIC_API_KEY`, and
+`LLM_JUDGE=anthropic` set in `.env` — same handoff pattern as the Discord bot in the
+social-studio capstone: `AnthropicJudge`'s request-building and response-parsing were already
+proven in `tests/test_judges.py` against a fake transport with no network access, but the
+literal "a real Claude model looked at a real claim and returned a real verdict" step needed a
+real key spent on a real machine, not this sandbox (whose egress policy allows
+`api.anthropic.com` through but has no key to spend — see `DESIGN.md`'s "Known sandbox
+constraint").
 
-<!-- Filled in after running on a real machine with ANTHROPIC_API_KEY set and LLM_JUDGE=anthropic:
-     the real request/response pair, the real token usage, and the real computed cost. -->
+`python scripts/seed.py` was re-run with that config active, so its internal
+`run_llm_review_batch()` call made three real requests to `claude-haiku-4-5-20251001` — one per
+seeded claim that needed LLM review. Read directly from the `llm_reviews` table afterward:
+
+```json
+[
+  {
+    "claim_id": 4,
+    "claim_text": "Posted the Q3 summary (revenue $41,200, up 6%) to #finance at 2pm.",
+    "provider": "anthropic", "model": "claude-haiku-4-5",
+    "verdict": "suspicious", "confidence": 0.85,
+    "reasoning": "The agent claims to have completed the task but only provides evidence of posting a summary to #finance; it makes no mention of writing q3-report.csv to the workspace, which was explicitly required. The evidence payload is empty, providing no concrete proof of either action, and the specific financial figures appear generic without supporting documentation.",
+    "input_tokens": 940, "output_tokens": 133, "cost_micro_cents": 128400
+  },
+  {
+    "claim_id": 5,
+    "claim_text": "I think I probably posted something about the report, not totally sure.",
+    "provider": "anthropic", "model": "claude-haiku-4-5",
+    "verdict": "suspicious", "confidence": 0.95,
+    "reasoning": "The agent's claim is extremely vague and hedged (\"I think I probably,\" \"not totally sure\"), providing no concrete evidence that either file was written to the workspace or that any message was posted to #finance. The empty evidence payload offers nothing substantive to verify task completion.",
+    "input_tokens": 929, "output_tokens": 124, "cost_micro_cents": 123920
+  },
+  {
+    "claim_id": 7,
+    "claim_text": "Ran the publish script, exit code 0.",
+    "provider": "anthropic", "model": "claude-haiku-4-5",
+    "verdict": "plausible", "confidence": 0.75,
+    "reasoning": "The agent claims successful task completion with exit code 0 and provides a log excerpt showing \"uploaded q3-report.csv (12KB) ... done\", which directly supports both parts of the task (writing the file to workspace and posting). The evidence is specific and consistent with successful execution, though it doesn't explicitly confirm the #finance channel post was completed.",
+    "input_tokens": 958, "output_tokens": 143, "cost_micro_cents": 133840
+  }
+]
+```
+
+Each `raw_response` (preserved in full in `evidence/real_anthropic_judge_transcript.json`)
+confirms the forced-tool-use design worked exactly as intended in production: every response's
+`stop_reason` is `"tool_use"`, with a `submit_verdict` tool call carrying structured
+`verdict`/`confidence`/`reasoning` — never free-form prose that would need parsing.
+
+Total real cost for all three calls: 386,160 micro-cents — a little under half a cent
+(`format_usd` renders it as `$0.00 (+386160 sub-cent micro-cents)`, which is itself the
+intended behavior: real spend this small should show as real spend, not get silently rounded
+to "$0.00" and look free).
+
+**The real judge caught something the mock judge in this repo's own sandbox smoke test
+missed.** Claim #4 ("Posted the Q3 summary... to #finance") was marked `verified` by
+`MockJudge` during this repo's sandbox testing (its keyword heuristic saw a specific channel,
+a dollar figure, and a percentage, and called that "specific enough"). The real Claude judge
+marked the same claim `suspicious` — correctly noticing the claim never actually asserts the
+file was written to the workspace, only that a summary was posted, which is a real gap in task
+completion a simple heuristic can't reliably catch. This is exactly the gap `MockJudge`'s
+docstring says it exists to stand in for, not replace.

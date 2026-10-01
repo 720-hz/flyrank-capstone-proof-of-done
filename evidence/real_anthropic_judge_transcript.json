@@ -1,0 +1,140 @@
+[
+  {
+    "id": 1,
+    "claim_id": 4,
+    "provider": "anthropic",
+    "model": "claude-haiku-4-5",
+    "verdict": "suspicious",
+    "confidence": 0.85,
+    "reasoning": "The agent claims to have completed the task but only provides evidence of posting a summary to #finance; it makes no mention of writing q3-report.csv to the workspace, which was explicitly required. The evidence payload is empty, providing no concrete proof of either action, and the specific financial figures appear generic without supporting documentation.",
+    "input_tokens": 940,
+    "output_tokens": 133,
+    "cost_micro_cents": 128400,
+    "raw_response": {
+      "model": "claude-haiku-4-5-20251001",
+      "id": "msg_011Cfak3GirvxCiMR17wLJnv",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_01Arh36ZJ9FGoW4q133gXd9x",
+          "name": "submit_verdict",
+          "input": {
+            "verdict": "suspicious",
+            "confidence": 0.85,
+            "reasoning": "The agent claims to have completed the task but only provides evidence of posting a summary to #finance; it makes no mention of writing q3-report.csv to the workspace, which was explicitly required. The evidence payload is empty, providing no concrete proof of either action, and the specific financial figures appear generic without supporting documentation."
+          },
+          "caller": { "type": "direct" }
+        }
+      ],
+      "container": null,
+      "stop_reason": "tool_use",
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 940,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": { "ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": 0 },
+        "output_tokens": 133,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null
+    },
+    "created_at": "2026-10-01T02:39:25.508721+00:00"
+  },
+  {
+    "id": 2,
+    "claim_id": 5,
+    "provider": "anthropic",
+    "model": "claude-haiku-4-5",
+    "verdict": "suspicious",
+    "confidence": 0.95,
+    "reasoning": "The agent's claim is extremely vague and hedged (\"I think I probably,\" \"not totally sure\"), providing no concrete evidence that either file was written to the workspace or that any message was posted to #finance. The empty evidence payload offers nothing substantive to verify task completion.",
+    "input_tokens": 929,
+    "output_tokens": 124,
+    "cost_micro_cents": 123920,
+    "raw_response": {
+      "model": "claude-haiku-4-5-20251001",
+      "id": "msg_011Cfak3RfstkETGw7iu6rzF",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_014Wt9yLazT3mWp6FwZ4GFhe",
+          "name": "submit_verdict",
+          "input": {
+            "verdict": "suspicious",
+            "confidence": 0.95,
+            "reasoning": "The agent's claim is extremely vague and hedged (\"I think I probably,\" \"not totally sure\"), providing no concrete evidence that either file was written to the workspace or that any message was posted to #finance. The empty evidence payload offers nothing substantive to verify task completion."
+          },
+          "caller": { "type": "direct" }
+        }
+      ],
+      "container": null,
+      "stop_reason": "tool_use",
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 929,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": { "ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": 0 },
+        "output_tokens": 124,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null
+    },
+    "created_at": "2026-10-01T02:39:25.508721+00:00"
+  },
+  {
+    "id": 3,
+    "claim_id": 7,
+    "provider": "anthropic",
+    "model": "claude-haiku-4-5",
+    "verdict": "plausible",
+    "confidence": 0.75,
+    "reasoning": "The agent claims successful task completion with exit code 0 and provides a log excerpt showing \"uploaded q3-report.csv (12KB) ... done\", which directly supports both parts of the task (writing the file to workspace and posting). The evidence is specific and consistent with successful execution, though it doesn't explicitly confirm the #finance channel post was completed.",
+    "input_tokens": 958,
+    "output_tokens": 143,
+    "cost_micro_cents": 133840,
+    "raw_response": {
+      "model": "claude-haiku-4-5-20251001",
+      "id": "msg_011Cfak3aVhDUJLMPNpAVfJg",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_use",
+          "id": "toolu_01GVUrdsANQsQEMTXWvipXLo",
+          "name": "submit_verdict",
+          "input": {
+            "verdict": "plausible",
+            "confidence": 0.75,
+            "reasoning": "The agent claims successful task completion with exit code 0 and provides a log excerpt showing \"uploaded q3-report.csv (12KB) ... done\", which directly supports both parts of the task (writing the file to workspace and posting). The evidence is specific and consistent with successful execution, though it doesn't explicitly confirm the #finance channel post was completed."
+          },
+          "caller": { "type": "direct" }
+        }
+      ],
+      "container": null,
+      "stop_reason": "tool_use",
+      "stop_sequence": null,
+      "stop_details": null,
+      "usage": {
+        "input_tokens": 958,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": { "ephemeral_5m_input_tokens": 0, "ephemeral_1h_input_tokens": 0 },
+        "output_tokens": 143,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "diagnostics": null
+    },
+    "created_at": "2026-10-01T02:39:25.508721+00:00"
+  }
+]

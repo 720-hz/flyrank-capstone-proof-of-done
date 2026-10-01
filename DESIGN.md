@@ -54,7 +54,8 @@ claims
   id, task_id, agent_id, claim_text,
   evidence_type ('file' | 'url' | 'text' | 'command'),
   evidence_payload (json — shape depends on evidence_type, see below),
-  status ('pending' | 'verifying' | 'verified' | 'failed' | 'suspicious' | 'needs_llm_review'),
+  status ('pending' | 'verifying' | 'verified' | 'failed' | 'suspicious' |
+          'needs_llm_review' | 'reviewing'),
   created_at, updated_at, resolved_at, claimed_at (worker claim timestamp, same
   conditional-UPDATE pattern as capstone 3/4's durable workers)
 
