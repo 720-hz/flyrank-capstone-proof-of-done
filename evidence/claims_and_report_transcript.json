@@ -1,0 +1,146 @@
+{
+  "claims_response": {
+    "claims": [
+      {
+        "id": 8,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Will follow up with the final numbers later.",
+        "evidence_type": "text",
+        "evidence_payload": {},
+        "status": "suspicious",
+        "created_at": "2026-10-01T00:06:30.999222+00:00",
+        "updated_at": "2026-10-01T02:06:31.000224+00:00",
+        "resolved_at": "2026-10-01T02:06:31.000224+00:00",
+        "claimed_at": null
+      },
+      {
+        "id": 7,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Ran the publish script, exit code 0.",
+        "evidence_type": "command",
+        "evidence_payload": {
+          "claimed_exit_code": 0,
+          "log_excerpt": "[publish] uploaded q3-report.csv (12KB) ... done"
+        },
+        "status": "verified",
+        "created_at": "2026-10-01T02:06:30.728215+00:00",
+        "updated_at": "2026-10-01T02:06:30.986099+00:00",
+        "resolved_at": "2026-10-01T02:06:30.986099+00:00",
+        "claimed_at": "2026-10-01T02:06:30.986099+00:00"
+      },
+      {
+        "id": 6,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Ran the publish script, exit code 0.",
+        "evidence_type": "command",
+        "evidence_payload": {
+          "claimed_exit_code": 0
+        },
+        "status": "suspicious",
+        "created_at": "2026-10-01T02:06:30.728198+00:00",
+        "updated_at": "2026-10-01T02:06:30.729193+00:00",
+        "resolved_at": "2026-10-01T02:06:30.729193+00:00",
+        "claimed_at": "2026-10-01T02:06:30.729193+00:00"
+      },
+      {
+        "id": 5,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "I think I probably posted something about the report, not totally sure.",
+        "evidence_type": "text",
+        "evidence_payload": {},
+        "status": "suspicious",
+        "created_at": "2026-10-01T02:06:30.728180+00:00",
+        "updated_at": "2026-10-01T02:06:30.986099+00:00",
+        "resolved_at": "2026-10-01T02:06:30.986099+00:00",
+        "claimed_at": "2026-10-01T02:06:30.986099+00:00"
+      },
+      {
+        "id": 4,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Posted the Q3 summary (revenue $41,200, up 6%) to #finance at 2pm.",
+        "evidence_type": "text",
+        "evidence_payload": {},
+        "status": "verified",
+        "created_at": "2026-10-01T02:06:30.728162+00:00",
+        "updated_at": "2026-10-01T02:06:30.986099+00:00",
+        "resolved_at": "2026-10-01T02:06:30.986099+00:00",
+        "claimed_at": "2026-10-01T02:06:30.986099+00:00"
+      },
+      {
+        "id": 3,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Confirmed the status page is reachable.",
+        "evidence_type": "url",
+        "evidence_payload": {
+          "url": "https://example.com",
+          "expect_status": 200,
+          "expect_contains": "Example"
+        },
+        "status": "failed",
+        "created_at": "2026-10-01T02:06:30.728139+00:00",
+        "updated_at": "2026-10-01T02:06:30.729193+00:00",
+        "resolved_at": "2026-10-01T02:06:30.729193+00:00",
+        "claimed_at": "2026-10-01T02:06:30.729193+00:00"
+      },
+      {
+        "id": 2,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Wrote q4-report.csv to the workspace root.",
+        "evidence_type": "file",
+        "evidence_payload": {
+          "path": "q4-report.csv"
+        },
+        "status": "failed",
+        "created_at": "2026-10-01T02:06:30.728105+00:00",
+        "updated_at": "2026-10-01T02:06:30.729193+00:00",
+        "resolved_at": "2026-10-01T02:06:30.729193+00:00",
+        "claimed_at": "2026-10-01T02:06:30.729193+00:00"
+      },
+      {
+        "id": 1,
+        "task_id": 1,
+        "agent_id": 1,
+        "claim_text": "Wrote q3-report.csv to the workspace root.",
+        "evidence_type": "file",
+        "evidence_payload": {
+          "path": "q3-report.csv"
+        },
+        "status": "verified",
+        "created_at": "2026-10-01T02:06:30.727908+00:00",
+        "updated_at": "2026-10-01T02:06:30.729193+00:00",
+        "resolved_at": "2026-10-01T02:06:30.729193+00:00",
+        "claimed_at": "2026-10-01T02:06:30.729193+00:00"
+      }
+    ]
+  },
+  "report_response": {
+    "id": 1,
+    "period_start": "2000-01-01T00:00:00+00:00",
+    "period_end": "2100-01-01T00:00:00+00:00",
+    "generated_at": "2026-10-01T02:06:33.088689+00:00",
+    "summary": {
+      "total_claims": 8,
+      "status_counts": {
+        "verified": 3,
+        "failed": 2,
+        "suspicious": 3
+      },
+      "flagged_count": 5,
+      "flagged_claim_ids": [
+        2,
+        3,
+        5,
+        6,
+        8
+      ]
+    },
+    "pdf_path": "/home/claude/flyrank-capstone-proof-of-done/reports/audit_2000-01-01T00-00-00+00-00_2100-01-01T00-00-00+00-00.pdf"
+  }
+}
